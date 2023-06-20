@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Sale\ApplySaleFiltersAction;
 use App\Actions\Sale\CreateOrUpdateSaleAction;
 use App\Actions\Sale\DeleteSaleAction;
 use App\Http\Resources\Sale\SaleResource;
@@ -14,7 +15,11 @@ class SaleController extends Controller
 {
     public function index(): SaleResourceCollection
     {
-        return new SaleResourceCollection(Sale::get());
+        $query = ApplySaleFiltersAction::execute(
+            Collection::make(request()->query->all())
+        );
+
+        return new SaleResourceCollection($query->get());
     }
 
     public function show(Request $request, $id): SaleResource

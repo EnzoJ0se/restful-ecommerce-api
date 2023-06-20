@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Product\ApplyProductFiltersAction;
 use App\Actions\Product\CreateOrUpdateProductAction;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\ProductResourceCollection;
@@ -13,7 +14,11 @@ class ProductController extends Controller
 {
     public function index(): ProductResourceCollection
     {
-        return new ProductResourceCollection(Product::get());
+        $query = ApplyProductFiltersAction::execute(
+            Collection::make(request()->query->all())
+        );
+
+        return new ProductResourceCollection($query->get());
     }
 
     public function show(Request $request, $id): ProductResource

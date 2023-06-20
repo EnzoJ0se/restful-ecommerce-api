@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Customer\ApplyCustomerFiltersAction;
 use App\Actions\Customer\CreateOrUpdateCustomerAction;
 use App\Http\Resources\Customer\CustomerResource;
 use App\Http\Resources\Customer\CustomerResourceCollection;
@@ -13,7 +14,11 @@ class CustomerController extends Controller
 {
     public function index(): CustomerResourceCollection
     {
-        return new CustomerResourceCollection(Customer::get());
+        $query = ApplyCustomerFiltersAction::execute(
+            Collection::make(request()->query->all())
+        );
+
+        return new CustomerResourceCollection($query->get());
     }
 
     public function show(Request $request, $id): CustomerResource

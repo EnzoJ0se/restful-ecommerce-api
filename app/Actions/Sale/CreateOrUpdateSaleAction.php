@@ -37,8 +37,6 @@ class CreateOrUpdateSaleAction
         $sale->refresh();
 
         if ($sale->product()->exists()) {
-            \Log::info($sale->product->stock_quantity);
-
             $sale->product()->update([
                 'stock_quantity' => $sale->product->stock_quantity - $sale->quantity
             ]);
