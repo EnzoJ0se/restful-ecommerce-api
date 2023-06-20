@@ -27,6 +27,7 @@ class Customer extends Model
     ];
 
     protected $visible = [
+        'id',
         'name',
         'cpf',
         'phone',

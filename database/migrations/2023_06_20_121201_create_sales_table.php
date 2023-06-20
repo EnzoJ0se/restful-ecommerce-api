@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('customer_id')->nullable()->constrained();
+            $table->foreignId('product_id')->nullable()->constrained();
 
             $table->string('code', 150);
             $table->string('customer_cpf', 15)->index();

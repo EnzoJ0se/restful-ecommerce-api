@@ -35,6 +35,7 @@ class Sale extends Model
     ];
 
     protected $visible = [
+        'id',
         'customer_id',
         'product_id',
         'code',
